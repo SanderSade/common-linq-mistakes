@@ -107,7 +107,7 @@ persons.Where(x => x.LastName == "Smith" && x.FirstName == "John").Select(x => x
 persons.Where(x => x.LastName == "Smith" && x.FirstName == "John");
 ```
 **Explanation**  
-I am not sure why people use this pattern, where you just select the item itself without any modifications &ndash; but I have seen this a couple of times. Perhaps they intended to do something with .Select() and forgot.
+I am not sure why people just select the items themselves without any modifications &ndash; but I have seen this a couple of times. Perhaps they intended to do something with .Select() and forgot, or thought that .Select() materializes the query, like .ToList() or .ToArray().
 
 
 ## Empty .Count() for arrays, List&lt;T&gt;, Dictionary&lt;T&gt;, ...
