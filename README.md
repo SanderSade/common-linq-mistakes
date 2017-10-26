@@ -1,6 +1,6 @@
 # Common LINQ mistakes
 
-This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others (and myself) - and using the results for trainings of people new to .NET.
+This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others (and myself) - and using the results for training people new to .NET.
 
 If you complain about some of these "compiler/interpreter will fix that", I have to repeat what I've said before: "Programmer should be smarter than his/her tools". Not to mention, in many cases the misuse obfuscates the intent of the code, or returns invalid results.
 
