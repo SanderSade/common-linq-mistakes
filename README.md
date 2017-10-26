@@ -59,9 +59,9 @@ if (persons.Any(x => x.LastName == "Smith"))...
 if (persons.All(x => x.LastName == "Smith"))...
 ```
 **Explanation**  
-.Count() will do the full count of the (matching) items in the set. If you are interested that there is a matching item in the set, use .Any() - .Any() just ensures that there is at least one matching item, with an empty .Any() just ensuring that there are items in your set.  
+.Count() will do the full iteration of the (matching) items in the set. If you are interested that there is a matching item in the set, use .Any() - .Any() just returns true when there is at least one matching item, with an empty .Any() just returning true when there are items in your set.  
 
-E.g. if you have list of 10M persons, and you need to know that a person with last name Smith exists, `persons.Count(x => x.LastName == "Smith")` will go through all the persons and check their last name, returning total number of Smiths. `persons.Any(x => x.LastName == "Smith")` returns true after encountering first person with last name Smith.
+E.g. if you have list of 10M persons, and you need to know that a person with last name Smith exists, `persons.Count(x => x.LastName == "Smith")` will go through all the persons and check their last name, returning total number of Smiths. `persons.Any(x => x.LastName == "Smith")` returns true after encountering the first entry with last name Smith.
 
 .All() is the opposite of .Any() - if you need to know that all your persons have lastname Smith, `persons.All(x => x.LastName == "Smith")` will return false when encountering first person with last name **not** Smith, without going over all of the set.
 
