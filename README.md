@@ -118,7 +118,7 @@ persons.OrderBy(x => x.LastName).OrderBy(x => x.FirstName);
 persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
 ```
 **Explanation**  
-The "wrong" version sorts persons by LastName - and then ignores that sort completly and re-sorts persons by FirstName. Correct use is one .OrderBy() followed by .ThenBy(), which can be chained multiple times (`persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.Age)`).  
+The "wrong" version sorts persons by LastName - and then ignores that sort completely and re-sorts persons by FirstName. Correct use is one .OrderBy() followed by .ThenBy(), which can be chained multiple times (`persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ThenBy(x => x.Age)`).  
 
 This also applies to .OrderByDescending() and .ThenByDescending().
 
