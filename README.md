@@ -7,7 +7,14 @@ If you complain about some of these "compiler/interpreter will fix that", I have
 
 ## Deferred execution.
 
-By far the biggest problem that people have when using LINQ for the first time. [Just google it](https://www.google.com/search?q=linq+deferred+execution), there are great many explanations.
+By far the biggest issue people have when learning LINQ.  
+
+[There are great many explanations](https://www.google.com/search?q=linq+deferred+execution), for example (in no particular order):  
+* [LINQ and Deferred Execution](https://blogs.msdn.microsoft.com/charlie/2007/12/10/linq-and-deferred-execution/)
+* [Deferred query execution](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ef/language-reference/query-execution#deferred-query-execution)
+* [Deferred vs Immediate Query Execution in LINQ](http://www.dotnetcurry.com/linq/750/deferred-vs-immediate-query-execution-linq)
+* [Deferred execution vs immediate execution in LINQ](https://dotnetvibes.com/2016/01/04/deferred-execution-vs-immediate-execution-in-linq/)
+* [Understanding LINQ's Deferred Execution](http://www.codeguru.com/csharp/csharp/cs_linq/article.php/c16935/Understanding-LINQs-Deferred-Execution.htm)
 
 ## .Where().First()
 
