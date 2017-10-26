@@ -5,7 +5,7 @@ This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/p
 If you complain about some of these "compiler/interpreter will fix that", I have to repeat what I've said before: "Programmer should be smarter than his/her tools". Not to mention, in many cases the misuse obfuscates the intent of the code, or returns invalid results.
 
 
-## Deferred execution.
+## Deferred execution
 
 By far the biggest issue people have when learning LINQ.  
 
@@ -50,6 +50,26 @@ var person = persons.FirstOrDefault(x => x.Id == 21034);
  In terms of SQL, Single is: `SELECT TOP 2...` whereas First is `SELECT TOP 1...`. If you have 10M rows, and your match is the very first row, Single will still run through all of the rows, validating that there are no more matches, whereas First returns immediately.
 
 In most cases, you aren't interested in ensuring that there is just one match - or often it is logically impossible. See the examples above - if your database has two Person entries with same ID, you have far bigger problems than using LINQ badly...
+
+
+## Not understanding the difference between First() and FirstOrDefault()  
+
+This is highly situation-dependent. Sometimes .First() is correct, and sometimes it isn't.
+
+It is important to understand that .First() and .Single() throw an exception when no match is found, whereas .FirstOrDefault() and .SingleOrDefault() won't &ndash; and return default/null value, depending on the data type.
+
+Take, for example:
+```
+var person = persons.First(x => x.Id == 21034);
+```
+Exception may be the correct behavior if person with ID 21034 should exist, and not finding the entry is literally exceptional. 
+
+On the other hand:
+```
+var login = users.First(x => x.Username == "john.smith@example.com");
+```
+Instead of having First() throwing an exception, you probably should use .FirstOrDefault() and check `login` variable for null - and log the invalid log-in attempt along with the details.
+
 
 
 ## Using .Count() instead of .Any() and .All()
