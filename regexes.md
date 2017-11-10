@@ -1,5 +1,5 @@
 
-This is a list of regular expressions which help to find LINQ mistakes, compiled by @oriash93 (#3).
+This is a list of regular expressions which help to find LINQ mistakes ([#3](https://github.com/SanderSade/common-linq-mistakes/issues/3)).
 
 ## .Single() and .SingleOrDefault()
 use: `\.Single(OrDefault)?\(.*\)`
