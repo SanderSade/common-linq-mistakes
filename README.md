@@ -4,8 +4,9 @@ This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/p
 
 These mistakes and problems apply to all LINQ providers, but since people new to LINQ are hopefully familiar with SQL, some of the mistakes have explanations or examples in SQL. 
 
-If you think that "LINQ provider will fix that", programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter will fix your bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, or returns invalid results.
+Should you think that "LINQ provider will fix that", programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix your bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, or returns invalid results.
 
+If you need to find these problems in the code, [here is a list of regular expressions](regexes.md) for that. 
 
 ## Deferred execution
 
