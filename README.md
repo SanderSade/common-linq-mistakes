@@ -1,8 +1,10 @@
 # Common LINQ mistakes
 
-This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others (and myself) - and using the results for training people new to .NET.
+This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others - and my own - and using the results for training people new to .NET. 
 
-If you complain about some of these "compiler/interpreter will fix that", I have to repeat what I've said before: "Programmer should be smarter than his/her tools". Not to mention, in many cases the misuse obfuscates the intent of the code, or returns invalid results.
+These mistakes and problems apply to all LINQ providers, but since people new to LINQ are hopefully familiar with SQL, some of the mistakes have explanations or examples in SQL. 
+
+If you think that "LINQ provider will fix that", programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter will fix your bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, or returns invalid results.
 
 
 ## Deferred execution
@@ -30,7 +32,14 @@ var person = persons.First(x => x.LastName == "Smith" && x.FirstName == "John");
 **Explanation**  
 Depending on optimizations of the LINQ provider, this may mean, for example, that your database fetches all John Smiths to your application, and the application then returns first of those. You definitely don't want that.
 
-This also applies for `.Where(x => x.LastName == "Smith").Count()` and other similar constructs.
+This also applies for `.Where(x => x.LastName == "Smith").Count()` and other similar constructs, all of which obfuscate the intent of the code. 
+
+Let's explain the example code with [Rubber Duck Debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging):
+
+* Wrong: I will take all persons named John Smith and the use the first of them.  
+* Correct: I will use the first person named John Smith.
+
+
   
 ## Using .SingleOrDefault()/Single() instead .FirstOrDefault()/First()
 **Wrong:**
@@ -45,12 +54,13 @@ var person = persons.FirstOrDefault(x => x.Id == 21034);
 **Explanation**  
 `.Single()/.SingleOrDefault()` ensures that there is just one and only one match in the set, whereas `.First()/FirstOrDefault()` returns the first match.   
 
-`Single..` methods go over all elements of the set, validating that there is just one match and throw an error if there are more - which is both costly and usually unneeded, unless validating user input or such.  
+`Single..` methods iterate over all elements of the set until two matching items are found &ndash; validating that there is just one match and throw an error if second is found - which is both costly and usually unneeded, unless validating user input or such.  
 
  In terms of SQL, Single is: `SELECT TOP 2...` whereas First is `SELECT TOP 1...`. If you have 10M rows, and your match is the very first row, Single will still run through all of the rows, validating that there are no more matches, whereas First returns immediately.
 
-In most cases, you aren't interested in ensuring that there is just one match - or often it is logically impossible. See the examples above - if your database has two Person entries with same ID, you have far bigger problems than using LINQ badly...
+In most cases, you aren't interested in ensuring that there is just one match - or often it is logically impossible. See the examples above - if your database has two Person entries with same primary key (ID), you have far bigger problems than using LINQ badly...
 
+A special case is `.Single()` without [predicate](https://docs.microsoft.com/en-us/dotnet/api/system.predicate-1?view=netframework-4.7.1), which is fine to use if logically or semantically there should be only a single element.
 
 ## Not understanding the difference between First() and FirstOrDefault()  
 
@@ -62,7 +72,7 @@ Take, for example:
 ```
 var person = persons.First(x => x.Id == 21034);
 ```
-Exception may be the correct behavior if person with ID 21034 should exist, and not finding the entry is literally exceptional. 
+Exception may be the correct behavior if person with ID 21034 should exist, and not finding the entry is literally exceptional. However, remember that exceptions [should not be used for flow control](http://wiki.c2.com/?DontUseExceptionsForFlowControl)!
 
 On the other hand:
 ```
@@ -70,7 +80,7 @@ var login = users.First(x => x.Username == "john.smith@example.com");
 ```
 Instead of having First() throwing an exception, you probably should use .FirstOrDefault() and check `login` variable for null - and log the invalid log-in attempt along with the details.
 
-
+A very common pattern is "update or create" ("upsert" in SQL terms), for which you should always use .FirstOrDefault() and not exception handling.
 
 ## Using .Count() instead of .Any() and .All()
 **Wrong:**
@@ -105,7 +115,9 @@ persons.Where(x => x.LastName == "Smith" && x.FirstName == "John");
 **Explanation**  
 Chaining .Where() entries may end up in SQL database as multiple embedded queries (in style of `SELECT * FROM (SELECT * FROM PERSONS WHERE LastName = 'Smith') WHERE FirstName = 'John'`, instead of `SELECT * FROM PERSONS WHERE LastName = 'Smith' AND FirstName = 'John'`) &ndash; or will do multiple iterations over sets.  
 
-It also obfuscates the intent of the query.
+It also obfuscates the intent of the query. While most if not all LINQ providers optimize the multi-Where() properly - or the underlying provider does that - let's explain the code to our rubber duck again:  
+* Wrong: I will fetch all persons with last name Smith, and out of them I will take people with first name John.
+* Correct: I will fetch all persons named John Smith.
 
 
 ## .OrderBy().OrderBy()
@@ -134,7 +146,11 @@ persons.Where(x => x.LastName == "Smith" && x.FirstName == "John").Select(x => x
 persons.Where(x => x.LastName == "Smith" && x.FirstName == "John");
 ```
 **Explanation**  
-I am not sure why people just select the items themselves without any modifications &ndash; but I have seen this a couple of times. Perhaps they intended to do something with .Select() and forgot, or thought that .Select() materializes the query, like .ToList() or .ToArray().
+It is unclear why this artefact pops up every now and then. Maybe the author intended to do something with .Select() and forgot, or thought that .Select() materializes the query, like .ToList() or .ToArray().
+
+Another possible explanation is that they used this pattern to return IEnumerable&lt;T&gt;, but didn't know about [`.AsEnumerable()`](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.asenumerable?view=netframework-4.7.1#System_Linq_Enumerable_AsEnumerable__1_System_Collections_Generic_IEnumerable___0__) extension method.
+
+
 
 
 ## Empty .Count() for arrays, List&lt;T&gt;, Dictionary&lt;T&gt;, ...
