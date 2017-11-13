@@ -4,7 +4,7 @@ This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/p
 
 These mistakes and problems apply to all LINQ providers, but as people new to LINQ are hopefully familiar with SQL, some of the mistakes have explanations or examples in SQL. 
 
-In many cases, LINQ provider will fix the issue &ndash; but programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix the bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, run longer or return invalid results.
+In many cases, LINQ provider will fix the issue &ndash; but programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix the bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, uses more resources or returns invalid and unexpected results.
 
 If you need to find these problems in the code, [here is a list of regular expressions](regexes.md) for that. 
 
