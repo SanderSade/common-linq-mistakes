@@ -1,10 +1,10 @@
 # Common LINQ mistakes
 
-This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others - and my own - and using the results for training people new to .NET. 
+This is a list of common [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) mistakes, which has grown out from reading code of others - and my own - and using the results for training people new to .NET and LINQ. 
 
-These mistakes and problems apply to all LINQ providers, but since people new to LINQ are hopefully familiar with SQL, some of the mistakes have explanations or examples in SQL. 
+These mistakes and problems apply to all LINQ providers, but as people new to LINQ are hopefully familiar with SQL, some of the mistakes have explanations or examples in SQL. 
 
-Should you think that "LINQ provider will fix that", programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix your bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, or returns invalid results.
+In many cases, LINQ provider will fix the issue &ndash; but programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix the bad code. Not to mention, in many cases the misuse obfuscates the _intent of the code_, run longer or return invalid results.
 
 If you need to find these problems in the code, [here is a list of regular expressions](regexes.md) for that. 
 
