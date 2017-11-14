@@ -37,8 +37,8 @@ This also applies for `Where(x => x.LastName == "Smith").Count()` and other simi
 
 Let's explain the example code with [Rubber Duck Debugging](https://en.wikipedia.org/wiki/Rubber_duck_debugging):
 
-* Wrong: I will take all persons named John Smith and the use the first of them.  
-* Correct: I will use the first person named John Smith.
+* Wrong: I will take all persons named John Smith and use the first of them.  
+* Correct: I will get and use the first person named John Smith.
 
 
   
@@ -95,7 +95,7 @@ if (persons.Count(x => x.LastName == "Smith") == persons.Count())...
 if (persons.Any())...
 if (persons.Any(x => x.LastName == "Smith"))...
 if (persons.All(x => x.LastName == "Smith"))...
-```
+``
 **Explanation**  
 Count() will do the full iteration of the (matching) items in the set. If you are interested that there is a matching item in the set, use Any() - Any() just returns true when there is at least one matching item, with an empty Any() just returning true when there are items in your set.  
 
