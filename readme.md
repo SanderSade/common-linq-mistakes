@@ -6,7 +6,7 @@ These mistakes and problems apply to all LINQ providers, but as people new to LI
 
 In many cases, LINQ provider will fix the issue &ndash; but programmer should be smarter than her/his tools and not expext the provider, compiler or interpreter to fix the bad code. Not to mention, in many cases the misuse obfuscates _the intent of the code_, uses more resources or has invalid/unexpected results.
 
-If you need to find these problems in the code, [here is a list of regular expressions](https://github.com/SanderSade/common-linq-mistakes/blob/master/regexes.md) for that. 
+If you need to find these problems in the code, [here is a list of regular expressions](regexes.md) for that. 
 
 ## Deferred execution
 
