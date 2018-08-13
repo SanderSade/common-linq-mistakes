@@ -151,8 +151,20 @@ It is unclear why this artefact pops up every now and then. Maybe the author int
 
 Another possible explanation is that they used this pattern to return IEnumerable&lt;T&gt;, but didn't know about [`AsEnumerable()`](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.asenumerable?view=netframework-4.7.1#System_Linq_Enumerable_AsEnumerable__1_System_Collections_Generic_IEnumerable___0__) extension method.
 
+## Using is...as instead of OfType<>()
+**Incorrect:**
+```
+var employees = persons.Where(x => x is Employee).Select(x => x as Employee);
+var employees = persons.Where(x => x is Employee).Select(x => (Employee)x);
+```
+**Correct:**
+```
+var employees = persons.OfType<Employee>();
+```
+**Explanation**  
+Using `is...as` antipattern is a very common occurrence in .NET world. `is` does nothing more internally besides trying to cast the object to specified type and returning false if the casting fails. Using `is...as` antipattern therefore casts the object to specified type twice - something that really should be avoided (note that c# 7 added [`is` pattern matching](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/is#pattern-matching-with-is), allowing constructs like `if (person is Employee e)...`)
 
-
+In case of LINQ, [OfType<>()](https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.oftype?f1url=https%3A%2F%2Fmsdn.microsoft.com%2Fquery%2Fdev15.query%3FappId%3DDev15IDEF1%26l%3DEN-US%26k%3Dk(System.Linq.Enumerable.OfType%60%601);) returns only the objects of the specified type. This allows both shorter and clearer code, compared to the incorrect version.
 
 ## Empty Count() for arrays, List&lt;T&gt;, Dictionary&lt;T&gt;, ...
 **Incorrect:**
