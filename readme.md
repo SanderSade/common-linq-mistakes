@@ -154,8 +154,9 @@ Another possible explanation is that they used this pattern to return IEnumerabl
 ## Using is...as instead of OfType<>()
 **Incorrect:**
 ```
-var employees = persons.Where(x => x is Employee).Select(x => x as Employee);
+var employees = persons.Where(x => x is Employee);
 var employees = persons.Where(x => x is Employee).Select(x => (Employee)x);
+var employees = persons.Select(x => x as Employee).Where(x => x != null);
 ```
 **Correct:**
 ```
